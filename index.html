@@ -14,6 +14,28 @@
 
         <div id="reset-button-container"><button type="submit">Reset Game</button></div>
 
+        <div id="enter-name-container">
+            <div id="enter-name-button-container">
+                <button>Enter Names</button>
+            </div>
+
+            <form action="#" method="post" id="enter-name-form">
+                <div>
+                    <label for="player-1-name">Player 1 Name</label>
+                    <input type="text" id="player-1-name" name="player-1-name" value="" />
+                </div>
+    
+                <div>
+                    <label for="player-2-name">Player 2 Name</label>
+                    <input type="text" id="player-2-name" name="player-2-name" value="" />
+                </div>
+
+                <div>
+                    <button type="submit">Submit Names</button>
+                </div>
+            </form>
+        </div>
+
         <div id="gameboard">
             <div data-index="0" class="gameboard-unit"></div>
             <div data-index="1" class="gameboard-unit"></div>

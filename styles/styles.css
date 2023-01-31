@@ -49,9 +49,22 @@ body{
     margin: 0 auto;
     margin-top: 40px;
     width: 800px;
-    border: 2px solid red;
+    /* border: 2px solid red; */
     padding: 10px;
     text-align: center;
+}
+
+#reset-button-container > button[type="submit"]{
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 1px solid #fde68a98;
+    padding: 5px 10px 5px 10px;
+    background-color: #fde68a98;
+}
+#reset-button-container > button[type="submit"]:hover{
+    background-color: #fde68ae7;
+    cursor: pointer;
 }
 
 /*****************************************************************************************************************************/
@@ -105,11 +118,34 @@ body{
 .x-and-o{
     display: flex;
     justify-content: center;
-    
+
     width: 100%;
     height: 100%;
     font-size: 189px;
     border: 1px solid black;
 }
 
+/*****************************************************************************************************************************/
+/*****************************************************************************************************************************/
+/* |Player Turn Section| */
+#player-turn-section{
+    margin: 0 auto;
+    margin-top: 40px;
+    border: 2px solid red;
+    padding: 10px;
+    width: 800px;
+    text-align: center;
+}
+
+/*****************************************************************************************************************************/
+/*****************************************************************************************************************************/
+/* |Game Results Section| */
+#game-results-section{
+    margin: 0 auto;
+    margin-top: 40px;
+    border: 2px solid red;
+    padding: 10px;
+    width: 800px;
+    text-align: center;
+}
 

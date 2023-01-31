@@ -89,7 +89,8 @@ const DisplayController = (() => {
         if (player.getPlayerNum() === 1 || player.getPlayerNum() === 2)
         {
             console.log(`${player.getPlayerName()} Wins!`); // Testing
-            // TODO: Display the winner in the browser window: 
+            const gameResult = document.querySelector('#game-results-section');
+            gameResult.textContent = `${player.getPlayerName()} Win's!`;
             PlayerController.commenceGame();
         }
     }
@@ -97,10 +98,18 @@ const DisplayController = (() => {
     // displayGameResultDraw(): Function will display a 'draw' in the browser.
     const displayGameResultDraw = () => {
         console.log("Game is a draw..."); // Testing
+        const gameResult = document.querySelector('#game-results-section');
+        gameResult.textContent = `Draw`;
         PlayerController.commenceGame();
     }
 
-    return {displayGameResultWinner, displayGameResultDraw};
+    // displayPlayerTurn(): Function will display which player has the next move.
+    const displayPlayerTurn = (player) => {
+        const playerTurnSection = document.querySelector('#player-turn-section');
+        playerTurnSection.textContent = `${player.getPlayerName()}'s Turn`;
+    }
+
+    return {displayGameResultWinner, displayGameResultDraw, displayPlayerTurn};
 }) ();
 
 // PlayerController module:
@@ -162,63 +171,55 @@ const PlayerController = (() => {
 
         if (playerOne.getPlayerNum() === playerTurns) // Player One Turn 
         {
-            // statements
-            // Determine if player one has already clicked on a gameboard unit already.
-            if (Gameboard.gameboard[e.target.dataset.index].includes('X') || Gameboard.gameboard[e.target.dataset.index].includes('O'))
-            {
-                return;
-            }
-            else
-            {
-                console.log(`Player One hasn't clicked on this board unit yet.`); // Testing
-                console.log('Player Ones Turn:'); // Testing
-                Gameboard.gameboard[e.target.dataset.index] = 'X';
-                console.log(`The dataset index that was initiated: ${e.target.dataset.index}`); // Testing
-                console.log(Gameboard.gameboard); // Testing 
-                console.log("\n"); // Testing
+            console.log(`Player One hasn't clicked on this board unit yet.`); // Testing
+            console.log(`Player One's Turn:`); // Testing
+            DisplayController.displayPlayerTurn(playerTwo);
 
-                // Will display the content on the gameboard.
-                letterContainer.textContent = Gameboard.gameboard[e.target.dataset.index];
-                letterContainer.style.color = 'red';
-                letterContainer.classList.add('x-and-o');
-                e.target.appendChild(letterContainer);
+            Gameboard.gameboard[e.target.dataset.index] = 'X';
+            console.log(`The dataset index that was initiated: ${e.target.dataset.index}`); // Testing 
+            console.log(Gameboard.gameboard); // Testing
+            console.log("\n"); // Testing
 
-                // Check for the win (Three in a row):
-                checkForWinner(e.target.dataset.index, 1);
+            // Will display the content on the gameboard.
+            letterContainer.textContent = Gameboard.gameboard[e.target.dataset.index];
+            letterContainer.style.color = 'red';
+            letterContainer.classList.add('x-and-o');
+            e.target.appendChild(letterContainer);
 
-                playerTurns = 2;
-                Gameboard.gameboardIndex++;
-            }
+            // Remove the event from the unit that was already clicked on.
+            e.target.removeEventListener('click', playGame);
 
+            // Check for the win (Three in a row):
+            checkForWinner(e.target.dataset.index, 1);
+
+            playerTurns = 2;
+            Gameboard.gameboardIndex++;
         }
         else if(playerTwo.getPlayerNum() === playerTurns)
         {
-            // Determine if player two has already clicked on a gameboard unit already. 
-            if (Gameboard.gameboard[e.target.dataset.index].includes('O') || Gameboard.gameboard[e.target.dataset.index].includes('X'))
-            {
-                return;
-            }
-            else
-            {
-                console.log(`Player Two hasn't clicked on this board unit yet.`);
-                console.log('Player Twos turn:'); // Testing
-                Gameboard.gameboard[e.target.dataset.index] = "O";
-                console.log(`The dataset index that was initiated: ${e.target.dataset.index}`); // testing
-                console.log(Gameboard.gameboard); // Testing
-                console.log("\n"); // Testing
+            console.log(`Player Two hasn't clicked on this board unit yet.`); // Testing
+            console.log(`Player Two's turn:`); // Testing
+            DisplayController.displayPlayerTurn(playerOne);
 
-                // Will display the content on the gameboard.
-                letterContainer.textContent = Gameboard.gameboard[e.target.dataset.index];
-                letterContainer.style.color = 'blue';
-                letterContainer.classList.add('x-and-o');
-                e.target.appendChild(letterContainer);
+            Gameboard.gameboard[e.target.dataset.index] = "O";
+            console.log(`The dataset index that was initiated: ${e.target.dataset.index}`); // Testing
+            console.log(Gameboard.gameboard); // Testing
+            console.log("\n"); // Testing
 
-                // Check for the win (Three in a row):
-                checkForWinner(e.target.dataset.index, 2);
+            // Wil display the content on the gameboard.
+            letterContainer.textContent = Gameboard.gameboard[e.target.dataset.index];
+            letterContainer.style.color = 'blue';
+            letterContainer.classList.add('x-and-o');
+            e.target.appendChild(letterContainer);
+            
+            // Remove the event from the unit that was already clicked.
+            e.target.removeEventListener('click', playGame);
 
-                playerTurns = 1;
-                Gameboard.gameboardIndex++;
-            }
+            // Check for the win (three in a row):
+            checkForWinner(e.target.dataset.index, 2);
+
+            playerTurns = 1;
+            Gameboard.gameboardIndex++;
         }
 
     }
@@ -235,7 +236,7 @@ const PlayerController = (() => {
         // Default player name for player two.
         if (playerTwo.getPlayerName() === '')
         {
-            playerTwo.setPlayerName('player Two');
+            playerTwo.setPlayerName('Player Two');
 
         }
 

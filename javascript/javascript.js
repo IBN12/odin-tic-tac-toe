@@ -89,8 +89,23 @@ const DisplayController = (() => {
         if (player.getPlayerNum() === 1 || player.getPlayerNum() === 2)
         {
             console.log(`${player.getPlayerName()} Wins!`); // Testing
+
             const gameResult = document.querySelector('#game-results-section');
+            const playerTurnSection = document.querySelector('#player-turn-section');
+
+            playerTurnSection.classList.add('hide-elements');
             gameResult.textContent = `${player.getPlayerName()} Win's!`;
+
+            // Direct a color for each player.
+            if (player.getPlayerNum() === 1)
+            {
+                gameResult.setAttribute('style', 'color: red;');
+            }
+            else if (player.getPlayerNum() === 2)
+            {
+                gameResult.setAttribute('style', 'color: blue;');
+            }
+
             PlayerController.commenceGame();
         }
     }
@@ -98,15 +113,31 @@ const DisplayController = (() => {
     // displayGameResultDraw(): Function will display a 'draw' in the browser.
     const displayGameResultDraw = () => {
         console.log("Game is a draw..."); // Testing
+
         const gameResult = document.querySelector('#game-results-section');
+        const playerTurnSection = document.querySelector('#player-turn-section'); 
+
+        playerTurnSection.classList.add('hide-elements');
         gameResult.textContent = `Draw`;
+
         PlayerController.commenceGame();
     }
 
     // displayPlayerTurn(): Function will display which player has the next move.
     const displayPlayerTurn = (player) => {
         const playerTurnSection = document.querySelector('#player-turn-section');
+
         playerTurnSection.textContent = `${player.getPlayerName()}'s Turn`;
+
+        // Direct a color for each player.
+        if (player.getPlayerNum() === 1)
+        {
+            playerTurnSection.setAttribute('style', 'color: red;');
+        }
+        else if (player.getPlayerNum() === 2)
+        {
+            playerTurnSection.setAttribute('style', 'color: blue;');
+        }
     }
 
     return {displayGameResultWinner, displayGameResultDraw, displayPlayerTurn};
@@ -376,9 +407,23 @@ const PlayerController = (() => {
     // addName(): Submitting each players name in the form controls value attribute.
     const addName = (e) => {
         e.preventDefault(); // Prevents the form from redirecting the browser. 
+
         console.log("Testing Names"); // Testing
         playerOne.setPlayerName(playerOneName.value);
         playerTwo.setPlayerName(playerTwoName.value);
+
+        // If the form controls are left empty for player one.
+        if (playerOne.getPlayerName() === '')
+        {
+            playerOne.setPlayerName("Player One");
+        }
+
+        // If the form controls are left empty for player two.
+        if (playerTwo.getPlayerName() === '')
+        {
+            playerTwo.setPlayerName("Player Two");
+        }
+
         console.log(`Player One Name: ${playerOne.getPlayerName()}`); // Testing
         console.log(`Player Two Name: ${playerTwo.getPlayerName()}`); // Testing
         enterPlayerForm.reset(); // Reset the form controls.

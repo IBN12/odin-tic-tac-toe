@@ -38,8 +38,6 @@ body{
     font-size: 25px;
     font-family: roboto, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     background-color: #fde68a;
-
-
 }
 
 /*****************************************************************************************************************************/
@@ -204,3 +202,80 @@ body{
     display: none;
 }
 
+/*****************************************************************************************************************************/
+/*****************************************************************************************************************************/
+/* Media queries for mobile and tablet devices. */
+
+/* Media-1 - For desktop and tablet devices. */
+@media screen and (max-width: 1000px){
+    /* Header Section */
+    #title{
+        width: 90%;
+    }
+
+    /* Reset Button */
+    #reset-button-container{
+        width: 100%;
+    }
+
+    /* Enter Name */
+    #enter-name-container{
+        width: 100%;
+    }
+
+    /* Gameboard */
+    #gameboard{
+        width: 100%;
+    }
+
+    /* Player Turn Section */
+    #player-turn-section{
+        width: 100%;
+    }
+
+    /* Game Results Section*/
+    #game-results-section{
+        width: 100%;
+    }
+}
+
+/* Media-2 - For mobile devices. */
+@media screen and (max-width: 600px){
+    /* Header Section */ 
+    #title{
+        width: 90%;
+        font-size: 22px;
+    }
+
+    /* Gameboard */
+    #gameboard{
+        grid-template-rows: repeat(3, 100px);
+
+        width: 100%;
+    }
+
+    /* X and O Section */
+    .x-and-o{
+        font-size: 95px;
+    }
+}
+
+/* Media-3 - For mobile devices with a smaller viewport. */
+@media screen and (max-width: 290px){
+    /* Header Section */
+    #title{
+        font-size: 19px;
+    }
+
+    /* Gameboard */
+    #gameboard{
+        grid-template-rows: repeat(3, 90px);
+
+        width: 100%;
+    }
+
+    /* X and O Section */
+    .x-and-o{
+        font-size: 85px;
+    } 
+}

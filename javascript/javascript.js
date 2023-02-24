@@ -88,8 +88,6 @@ const DisplayController = (() => {
     const displayGameResultWinner = (player) => {
         if (player.getPlayerNum() === 1 || player.getPlayerNum() === 2)
         {
-            console.log(`${player.getPlayerName()} Wins!`); // Testing
-
             const gameResult = document.querySelector('#game-results-section');
             const playerTurnSection = document.querySelector('#player-turn-section');
 
@@ -112,8 +110,6 @@ const DisplayController = (() => {
 
     // displayGameResultDraw(): Function will display a 'draw' in the browser.
     const displayGameResultDraw = () => {
-        console.log("Game is a draw..."); // Testing
-
         const gameResult = document.querySelector('#game-results-section');
         const playerTurnSection = document.querySelector('#player-turn-section'); 
 
@@ -145,56 +141,35 @@ const DisplayController = (() => {
 
 // PlayerController module:
 const PlayerController = (() => {
-    console.log("|Node References|"); // Testing
     // Node reference for the units on the gameboard.
     const gameboardUnits = document.querySelectorAll('.gameboard-unit');
-    console.log(gameboardUnits); // Testing
 
     // Node reference for the reset button.
     const resetButton = document.querySelector('button[type=submit]');
-    console.log(resetButton); // Testing
 
     // Node reference for the Enter Name button.
     const enterName = document.querySelector('#enter-name-button-container > button');
-    console.log(enterName); // Testing 
 
     // Node reference for the Enter Name Form.
     const enterNameForm = document.querySelector('#enter-name-form');
-    console.log(enterNameForm); // Testing
     enterNameForm.classList.add('hide-elements'); // Hide the Enter Name Form by default.
 
     // Node reference for the Enter Name Submit button.
     const enterNameFormSubmitButton = document.querySelector('#enter-name-form > div:nth-child(3) > button');
-    console.log(enterNameFormSubmitButton); // Testing
 
     // Node reference for player 1 to enter their name.
     const playerOneName = document.querySelector('#player-1-name');
-    console.log(playerOneName); // Testing
                 
     // Node reference for player 1 to enter their name.
     const playerTwoName = document.querySelector('#player-2-name');
-    console.log(playerTwoName); // Testing
 
     // Node reference for the enter name form.
     const enterPlayerForm = document.querySelector('#enter-name-form');
-    console.log(enterPlayerForm); // Testing
-
-    console.log(`Dataset index for the first board unit: ${gameboardUnits[0].dataset.index}`); // Testing 
-    console.log(`Gameboard starting length: ${Gameboard.gameboard.length}`); // Testing
-    console.log(`Gameboard index starts at: ${Gameboard.gameboardIndex}`); // Testing 
-    console.log("\n"); // Testing
 
     // Declaring playerOne and playerTwo of type Players and initiating each player object with their player number.
     const playerOne = Players(1);
     const playerTwo = Players(2);
     let playerTurns = 1; // Index variable that will change between the player numbers for their turns.
-
-    // Testing: Displaying the default win selections in the developer console:
-    console.log("|Default Win Selections|") // Testing
-    Gameboard.defaultWinSelections.filter(selection => {
-        console.log(selection);
-    });
-    console.log("\n");
 
     // playGame(): Will start the game up when the player clicks a unit of the gameboard. 
     const playGame = (e) => {
@@ -202,14 +177,9 @@ const PlayerController = (() => {
 
         if (playerOne.getPlayerNum() === playerTurns) // Player One Turn 
         {
-            console.log(`Player One hasn't clicked on this board unit yet.`); // Testing
-            console.log(`Player One's Turn:`); // Testing
             DisplayController.displayPlayerTurn(playerTwo);
 
             Gameboard.gameboard[e.target.dataset.index] = 'X';
-            console.log(`The dataset index that was initiated: ${e.target.dataset.index}`); // Testing 
-            console.log(Gameboard.gameboard); // Testing
-            console.log("\n"); // Testing
 
             // Will display the content on the gameboard.
             letterContainer.textContent = Gameboard.gameboard[e.target.dataset.index];
@@ -226,16 +196,11 @@ const PlayerController = (() => {
             playerTurns = 2;
             Gameboard.gameboardIndex++;
         }
-        else if(playerTwo.getPlayerNum() === playerTurns)
+        else if(playerTwo.getPlayerNum() === playerTurns) // Player Two Turn
         {
-            console.log(`Player Two hasn't clicked on this board unit yet.`); // Testing
-            console.log(`Player Two's turn:`); // Testing
             DisplayController.displayPlayerTurn(playerOne);
 
             Gameboard.gameboard[e.target.dataset.index] = "O";
-            console.log(`The dataset index that was initiated: ${e.target.dataset.index}`); // Testing
-            console.log(Gameboard.gameboard); // Testing
-            console.log("\n"); // Testing
 
             // Wil display the content on the gameboard.
             letterContainer.textContent = Gameboard.gameboard[e.target.dataset.index];
@@ -281,7 +246,6 @@ const PlayerController = (() => {
         }
         else if (playerOne.getPlayerGameResult() === true || playerTwo.getPlayerGameResult() === true) // Win
         {
-            console.log('Initiated: Please reset the game to play again.'); // Testing
             // Remove the addEventListener from each board unit after a win
             gameboardUnits.forEach(unit => {
                 unit.removeEventListener('click', playGame);
@@ -289,7 +253,7 @@ const PlayerController = (() => {
         }
         else if (playerOne.getPlayerGameResult() === false && playerTwo.getPlayerGameResult() === false) // Draw
         {
-            console.log('Draw: Please reset the game to play again.');
+            // Remove the addEventListener from each board unit after a draw. 
             gameboardUnits.forEach(unit => {
                 unit.removeEventListener('click', playGame);
             })
@@ -327,16 +291,13 @@ const PlayerController = (() => {
         // Final test for the win.
         if (playerOne.playerSelection.length >= 3 && playerTurns === 1)
         {
-            console.log("Final check for player one:"); // Testing
             Gameboard.defaultWinSelections.forEach(defaultSelectionIndex => {
-                console.log(`Testing default selection: ${defaultSelectionIndex}`); // Testing
 
                 defaultSelectionIndex.forEach(defaultElement => {
                     for (let i = 0; i < playerOne.playerSelection.length; i++)
                     {
                         if (playerOne.playerSelection[i] === defaultElement && playerOneMatch != 3)
                         {
-                            console.log(`Matching: ${playerOne.playerSelection[i]} === ${defaultElement}`); // Testing
                             playerOneMatch++;
                         }
                     }
@@ -344,31 +305,23 @@ const PlayerController = (() => {
                     // If there are three initial matches then player one wins.
                     if (playerOneMatch === 3)
                     {
-                        console.log(`Matches: ${playerOneMatch}`); // Testing
                         playerOneWins = true;
                         playerOne.setPlayerGameResult(playerOneWins);
                         DisplayController.displayGameResultWinner(playerOne);
-                        console.log(`${playerOne.getPlayerName()} Wins!`); // Testing
-
-                        console.log("\n"); // Testing 
                     }
                 });
-                console.log("\n"); // Testing
                 playerOneMatch = 0; // reset the match back to zero for the next iteration.
             });
         }
         else if (playerTwo.playerSelection.length >= 3 && playerTurns === 2)
         {
-            console.log("Final check for player two:"); // Testing
             Gameboard.defaultWinSelections.forEach(defaultSelectionIndex => {
-                console.log(`Testing default selection: ${defaultSelectionIndex}`); // Testing
 
                 defaultSelectionIndex.forEach(defaultElement => {
                     for (let i = 0; i < playerTwo.playerSelection.length; i++)
                     {
                         if (playerTwo.playerSelection[i] === defaultElement && playerTwoMatch != 3)
                         {
-                            console.log(`Matching: ${playerTwo.playerSelection[i]} === ${defaultElement}`); // Testing
                             playerTwoMatch++;
                         }
                     }
@@ -376,21 +329,14 @@ const PlayerController = (() => {
                     // If there are three initial matchs then player two wins.
                     if (playerTwoMatch === 3)
                     {
-                        console.log(`Matches: ${playerTwoMatch}`); // Testing
                         playerTwoWins = true;
                         playerTwo.setPlayerGameResult(playerTwoWins);
                         DisplayController.displayGameResultWinner(playerTwo);
-                        console.log(`${playerTwo.getPlayerName()} Wins`); // Testing
                     }
                 });
-                console.log("\n"); // Testing
                 playerTwoMatch = 0; // reset the match back to zero for the next iteration.
             });
         }
-
-        console.log(`Outside Final Check Scope - Did ${playerOne.getPlayerName()} Win? ${playerOneWins}`); // Testing
-        console.log(`Outside Final Check Scope - Did ${playerTwo.getPlayerName()} Win? ${playerTwoWins}`); // Testing
-        console.log("\n");
 
         // If the gameboard index reaches 8 then the board is full and the game is draw.
         if (Gameboard.gameboardIndex === 8 && playerOne.getPlayerGameResult() === false && playerTwo.getPlayerGameResult() === false)
@@ -408,7 +354,6 @@ const PlayerController = (() => {
     const addName = (e) => {
         e.preventDefault(); // Prevents the form from redirecting the browser. 
 
-        console.log("Testing Names"); // Testing
         playerOne.setPlayerName(playerOneName.value);
         playerTwo.setPlayerName(playerTwoName.value);
 
@@ -424,11 +369,8 @@ const PlayerController = (() => {
             playerTwo.setPlayerName("Player Two");
         }
 
-        console.log(`Player One Name: ${playerOne.getPlayerName()}`); // Testing
-        console.log(`Player Two Name: ${playerTwo.getPlayerName()}`); // Testing
         enterPlayerForm.reset(); // Reset the form controls.
         enterNameForm.classList.add('hide-elements'); // Hide the remove the form controls.
-        console.log("\n"); // Testing
     }
 
     // playerNames(): Display the form for the players to enter their names.
